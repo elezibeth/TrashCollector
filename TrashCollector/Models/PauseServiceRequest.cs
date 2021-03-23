@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace TrashCollector.Models
 {
-    public class PauseService
+    public class PauseServiceRequest
     {
-
         [Key]
         public int Id { get; set; }
 
@@ -18,12 +17,11 @@ namespace TrashCollector.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public int CustomerZip { get; set; }
 
         [ForeignKey("Customer")]
-        public int CustomerZip { get; set; }
+
+        public int CustomerId { get; set; }
         public Customer Customer { get; set; }
-
- 
-
     }
 }

@@ -12,22 +12,28 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TrashCollector.Controllers
 {
-    [Authorize(Roles = "Customer")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Customer")]
 
     public class CustomerController : Controller
     {
         private ApplicationDbContext _context;
-        public CustomerController(ApplicationDbContext context)
+        public CustomerController(ApplicationDbContext context) 
         {
             _context = context;
         }
         // GET: CustomerController
         public ActionResult Index()
         {
-           
-            return View("Create");
+            var customerMod = _context.Customers;
+            return View(customerMod);
         }
+        public IActionResult PauseService()
+        {
+
+            return View();
+
+        }
+
 
         // GET: CustomerController/Details/5
         public ActionResult Details(int id)
@@ -40,7 +46,38 @@ namespace TrashCollector.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult PauseService(IFormCollection collection)
+        {
+            
+            var zip = Convert.ToInt32(collection["CustomerZip"]);
+            var custId = _context.Customers.Select(z => z.Id).FirstOrDefault();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var startDate = Convert.ToDateTime(collection["StartDate"]);
+            var endDate = Convert.ToDateTime(collection["EndDate"]);
 
+            try
+            {
+                PauseServiceRequest pause = new PauseServiceRequest
+                {
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    CustomerZip = zip,
+                    CustomerId = custId
+
+
+                };
+                _context.PauseServiceRequests.Add(pause);
+                _context.SaveChanges();
+                return View("Index");
+            }
+            catch
+            {
+                return View("Index");
+            }
+
+        }
         // POST: CustomerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -67,7 +104,7 @@ namespace TrashCollector.Controllers
             _context.SaveChanges();
                 var custId = _context.Customer.Where(x => x.LastName == collection["LastName"]).Select(y => y.Id);
             
-                return View("Details", custId);
+                return View("Index");
             }
             catch
             {
