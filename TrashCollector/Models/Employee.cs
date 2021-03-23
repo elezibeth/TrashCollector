@@ -10,7 +10,6 @@ namespace TrashCollector.Models
 {
     public class Employee
     {
-
         [Key]
         public int Id { get; set; }
         [Display(Name = "First Name")]
@@ -20,5 +19,8 @@ namespace TrashCollector.Models
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
+
+        [Display(Name = "Employee Service Zip Code")]
+        public int Zip { get; set; }
     }
 }

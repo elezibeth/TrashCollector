@@ -19,7 +19,9 @@ namespace TrashCollector.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<GarbageDay> GarbageDays { get; set; }
         public DbSet<Address> Addresses { get; set; }
-        public 
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<PauseService> PauseServices { get; set; }
+        public DbSet<TrashPickup> TrashPickups { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder builder)
