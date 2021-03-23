@@ -20,7 +20,8 @@ namespace TrashCollector.Controllers
         // GET: CustomerController
         public ActionResult Index()
         {
-            return View();
+           
+            return View("Create");
         }
 
         // GET: CustomerController/Details/5
