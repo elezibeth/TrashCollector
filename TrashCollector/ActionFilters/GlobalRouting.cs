@@ -17,6 +17,11 @@ namespace TrashCollector.ActionFilters
         }
         public void OnActionExecuted(ActionExecutedContext context)
         {
+           
+        }
+
+        public void OnActionExecuting(ActionExecutingContext context)
+        {
             var controller = context.RouteData.Values["controller"];
             if (controller.Equals("Home"))
             {
@@ -29,11 +34,7 @@ namespace TrashCollector.ActionFilters
                     context.Result = new RedirectToActionResult("Index", "Employee", null);
                 }
             }
-        }
 
-        public void OnActionExecuting(ActionExecutingContext context)
-        {
-            
         }
     }
 }
