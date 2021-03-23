@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 using TrashCollector.Data;
 using TrashCollector.Models;
 using TrashCollector;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TrashCollector.Controllers
 {
+    [Authorize(Roles = "Customer")]
+    [Authorize(Roles = "Admin")]
+
     public class CustomerController : Controller
     {
         private ApplicationDbContext _context;
@@ -43,11 +48,30 @@ namespace TrashCollector.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+              
+                var zipInt = Convert.ToInt32(collection["ZipCode"]);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                Customer cust = new Customer
+                {
+                    FirstName = collection["FirstName"],
+                    LastName = collection["LastName"],
+                    AmountOwed = 0,
+                    StreetName = collection["StreetName"],
+                    City = collection["City"],
+                    State = collection["State"],
+                    ZipCode = zipInt,
+                    Day = collection["Day"]
+                    
+            };
+            _context.Customers.Add(cust);
+            _context.SaveChanges();
+                var custId = _context.Customer.Where(x => x.LastName == collection["LastName"]).Select(y => y.Id);
+            
+                return View("Details", custId);
             }
             catch
             {
-                return View();
+                return View("Index");
             }
         }
 

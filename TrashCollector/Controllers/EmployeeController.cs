@@ -21,7 +21,7 @@ namespace TrashCollector.Controllers
         // GET: EmployeeController
         public ActionResult Index()
         {
-            return View();
+            return View("Create");
         }
 
         // GET: EmployeeController/Details/5
