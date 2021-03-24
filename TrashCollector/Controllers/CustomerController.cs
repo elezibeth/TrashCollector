@@ -127,19 +127,20 @@ namespace TrashCollector.Controllers
             
             var zip = Convert.ToInt32(collection["CustomerZip"]);
             var lastname = collection["LastName"];
-            var lastnamest = Convert.ToString(collection["LastName"]);
-            var firstNameSt = Convert.ToString(collection["FirstName"]);
-            var customer = _context.Customers.Where(z => z.LastName == lastnamest).Where(i => i.FirstName == firstNameSt).Select(u => u.Id).FirstOrDefault();
+            var lastnamest = Convert.ToString(collection["CustomerLastName"]);
+            var firstNameSt = Convert.ToString(collection["CustomerFirstName"]);
+            var customer = _context.Customers.Where(i => i.FirstName == firstNameSt).Select(c => c).FirstOrDefault();
+
             var startDate = Convert.ToDateTime(collection["StartDate"]);
             var endDate = Convert.ToDateTime(collection["EndDate"]);
-            PauseServicesFour pause2 = new PauseServicesFour
+            PauseServicesFour pause2 = new PauseServicesFour()
             {
                 StartDate = startDate,
                 EndDate = endDate,
                 CustomerZip = zip,
-                CustomerFirstName = firstNameSt,
-                CustomerLastName = lastnamest,
-                CustomerId = customer
+                CustomerFirstName = collection["CustomerFirstName"],
+                CustomerLastName = collection["CustomerLastName"],
+                CustomerId = customer.Id
 
             };
             _context.PauseServicesFours.Add(pause2);
