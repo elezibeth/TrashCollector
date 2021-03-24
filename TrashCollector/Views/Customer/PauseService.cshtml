@@ -1,13 +1,13 @@
-﻿@model TrashCollector.Models.PauseServiceRequest
+﻿@model TrashCollector.Models.PauseServicesFour
 
 @{
     ViewData["Title"] = "PauseService";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Pause Service</h1>
+<h1>PauseService</h1>
 
-<h4>Request</h4>
+<h4>PauseServicesFour</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -28,7 +28,16 @@
                 <input asp-for="CustomerZip" class="form-control" />
                 <span asp-validation-for="CustomerZip" class="text-danger"></span>
             </div>
-
+            <div class="form-group">
+                <label asp-for="CustomerFirstName" class="control-label"></label>
+                <input asp-for="CustomerFirstName" class="form-control" />
+                <span asp-validation-for="CustomerFirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomerLastName" class="control-label"></label>
+                <input asp-for="CustomerLastName" class="form-control" />
+                <span asp-validation-for="CustomerLastName" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

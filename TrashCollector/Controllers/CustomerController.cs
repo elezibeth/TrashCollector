@@ -121,35 +121,33 @@ namespace TrashCollector.Controllers
 
       
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public IActionResult PauseService(IFormCollection collection)
         {
             
             var zip = Convert.ToInt32(collection["CustomerZip"]);
-            var custId = _context.Customers.Select(z => z.Id).FirstOrDefault();
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var lastname = collection["LastName"];
+            var lastnamest = Convert.ToString(collection["LastName"]);
+            var firstNameSt = Convert.ToString(collection["FirstName"]);
+            var customer = _context.Customers.Where(z => z.LastName == lastnamest).Where(i => i.FirstName == firstNameSt).Select(u => u.Id).FirstOrDefault();
             var startDate = Convert.ToDateTime(collection["StartDate"]);
             var endDate = Convert.ToDateTime(collection["EndDate"]);
-
-            try
+            PauseServicesFour pause2 = new PauseServicesFour
             {
-                PauseServiceRequest pause = new PauseServiceRequest
-                {
-                    StartDate = startDate,
-                    EndDate = endDate,
-                    CustomerZip = zip,
-                    CustomerId = custId
+                StartDate = startDate,
+                EndDate = endDate,
+                CustomerZip = zip,
+                CustomerFirstName = firstNameSt,
+                CustomerLastName = lastnamest,
+                CustomerId = customer
+
+            };
+            _context.PauseServicesFours.Add(pause2);
+            _context.SaveChanges();
 
 
-                };
-                _context.PauseServiceRequests.Add(pause);
-                _context.SaveChanges();
-                return View("Index");
-            }
-            catch
-            {
-                return View("Index");
-            }
+            return View("Index");
+         
 
         }
         // POST: CustomerController/Create

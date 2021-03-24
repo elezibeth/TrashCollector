@@ -23,6 +23,9 @@ namespace TrashCollector.Data
         public DbSet<PauseService> PauseServices { get; set; }
         public DbSet<TrashPickup> TrashPickups { get; set; }
         public DbSet<PauseServiceRequest> PauseServiceRequests{get; set;}
+        public DbSet<PauseServiceThree> PauseServicesThree { get; set; }
+        public DbSet<PauseServicesFour> PauseServicesFours { get; set; }
+
         
 
         protected override void OnModelCreating(ModelBuilder builder)
