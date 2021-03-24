@@ -18,6 +18,7 @@ namespace TrashCollector.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        
 
         [ForeignKey("Customer")]
         public int CustomerZip { get; set; }

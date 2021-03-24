@@ -29,14 +29,66 @@ namespace TrashCollector.Controllers
         }
         public IActionResult PauseService()
         {
-
+            
             return View();
 
         }
+        public IActionResult Random()
+        {
+            var rand = _context.Customers;
+            return View(rand);
+        }
+        public IActionResult GetBill(int id)
+        {
+            var bill = _context.Customer.Where(i => i.Id == id).FirstOrDefault();
+            return View(bill);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult GetBill()
+        {
+            return View();
+        }
 
-
+        public IActionResult ChangePickupDay(int id)
+        {
+            var pickup = _context.Customer.Where(i => i.Id == id).FirstOrDefault();
+            return View(pickup);
+        }
         // GET: CustomerController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult ConfirmDetails()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ConfirmDetails(IFormCollection collection)
+        {
+            var custId = _context.Customers.Select(z => z.Id).FirstOrDefault();
+            try
+            {
+                var cust = _context.Customers.Where(f => f.FirstName == collection["FirstName"])
+                    .Where(l => l.LastName == collection["LastName"])
+                    .FirstOrDefault();
+                cust.Day = collection["Day"];
+                _context.SaveChanges();
+                custId = cust.Id;
+                return RedirectToAction("Details", custId);
+            }
+            catch
+            {
+                return View("Index");
+            }
+        }
+
+
+        public ActionResult Details(int custId)
+        {
+            var cust = _context.Customer.Where(c => c.Id == custId).Select(d => d).FirstOrDefault();
+            return View(cust);
+        }
+        [HttpPost]
+        public IActionResult Details()
         {
             return View();
         }
@@ -46,6 +98,28 @@ namespace TrashCollector.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ChangePickupDay(IFormCollection collection)
+        {
+            var custId = _context.Customers.Select(z => z.Id).FirstOrDefault();
+            try
+            {
+                var cust = _context.Customers.Where(f => f.FirstName == collection["FirstName"])
+                    .Where(l => l.LastName == collection["LastName"])
+                    .FirstOrDefault();
+                cust.Day = collection["Day"];
+                _context.SaveChanges();
+                return View("Index");
+            }
+            catch
+            {
+                return View("Index");
+            }
+        }
+
+
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult PauseService(IFormCollection collection)

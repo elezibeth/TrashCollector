@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Customer Home</h1>
 
 <p>
     <a asp-action="Create">Finish setting up your account to begin recieving services!</a>
@@ -13,42 +13,14 @@
 <p>
     <a asp-action="PauseService">Temporarily Pause Service</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdentityUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AmountOwed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StreetName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.State)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ZipCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Day)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
- 
-        
+<p>
+    <a asp-action="ChangePickupDay">Request a change of your regularly scheduled pickup day.</a>
+</p>
+<p>
+    <a asp-action="Random">View Your Information.</a>
+</p>
+<p>
+    <a asp-action="Random">View Your Information.</a>
+</p>
 
-    </tbody>
-</table>
 }
